@@ -185,7 +185,23 @@ class OutputDeviceCommand(Command):
 
         else:
             raise ValueError(f"Incorrect command: {self.action}")
-        
+
+
+
+class DelayCommand(Command):
+    def __init__(self, time_seconds: int) -> None:
+        self.time_seconds = time_seconds
+
+    def execute(self, event_loop):
+        print("DelayCommand")
+        sleep(self.time_seconds)
+
+
+class ClearQueue(Command):
+    def execute(self, event_loop):
+        print("ClearQueue")
+        event_loop.clear()  
+
 
 class CommandFactory:
     def create_command(self, type, parameters):
@@ -204,5 +220,11 @@ class CommandFactory:
             return PrintCommand(**parameters)
         elif type == "OutputDeviceCommand":
             return OutputDeviceCommand(**parameters)
+        elif type == "BlockingStateUpdateCommand":
+            return BlockingStateUpdateCommand(**parameters)
+        elif type == "DelayCommand":
+            return DelayCommand(**parameters)
+        elif type == "ClearQueue":
+            return ClearQueue(**parameters)
         else:
             raise ValueError("Unknown type", type)

@@ -1,6 +1,7 @@
 from collections import deque
 from exception_handler import ExceptionHandler
 import RPi.GPIO as GPIO
+from logger import logger
 
 
 
@@ -22,6 +23,7 @@ class EventLoop:
         while self.ready:
             cmd = self.ready.popleft()
             try:
+                logger.warning(f"Executing command: {self}/{cmd}")
                 cmd.execute(self)
             except StopIteration:
                 print("Exiting event loop")

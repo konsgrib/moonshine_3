@@ -73,15 +73,6 @@ devices:
     - type: MessengerFile
       name: messenger
       filename: state.txt
-    - type: Button
-      name: button_1
-      pin: *cycle_1_pin
-    - type: Button
-      name: button_2
-      pin: *cycle_2_pin
-    - type: Button
-      name: button_3
-      pin: *cycle_3_pin
 programms:
   producer:
     - command:
@@ -174,6 +165,8 @@ programms:
       type: PrintCommand
       device: messenger
       text: ""
+    - command:
+      type: ClearQueue
 
 
 
