@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from sensor.temperature import TempertureSensor
 from sensor.water import WaterLevelSensor
 from sensor.humidity import HumidityLevelSensor
+from sensor.button import Button
 from output.two_pin.relay import Relay
 
 from output.two_pin.relay import Relay
@@ -23,6 +24,7 @@ class Factory(AbstractFactory):
         "HumidityLevelSensor": HumidityLevelSensor,
         "Relay": Relay,
         "Buzzer": Buzzer,
+        "Button": Button,
         "LcdDisplay": LcdDisplay,
         "MessengerFile": MessengerFile,
     }

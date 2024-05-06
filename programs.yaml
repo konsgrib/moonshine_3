@@ -27,9 +27,9 @@ pins:
     clk_pin: &lcd_clk 8
     reset_pin: &lcd_reset 25
   buttons:
-    cycle_1_pin: 9
-    cycle_2_pin: 10
-    cycle_3_pin: 11
+    cycle_1_pin: &cycle_1_pin 9
+    cycle_2_pin: &cycle_2_pin 10
+    cycle_3_pin: &cycle_3_pin 11
 one-wire:
   temperature:
     sensor_1: &t1_id 28-42f7d445552f
@@ -73,6 +73,15 @@ devices:
     - type: MessengerFile
       name: messenger
       filename: state.txt
+    - type: Button
+      name: button_1
+      pin: *cycle_1_pin
+    - type: Button
+      name: button_2
+      pin: *cycle_2_pin
+    - type: Button
+      name: button_3
+      pin: *cycle_3_pin
 programms:
   producer:
     - command:
