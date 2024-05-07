@@ -11,12 +11,12 @@ import subprocess
 
 cycle_1_bt_pin = 9
 cycle_2_bt_pin = 10
-cycle_3_bt_pin = 11
+# cycle_3_bt_pin = 11
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(cycle_1_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(cycle_2_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(cycle_3_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# GPIO.setup(cycle_3_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 
@@ -42,9 +42,10 @@ def callback(channel):
             s = subprocess.Popen(["/home/pi/Projects/moonshine_3/.venv/bin/python",
                             "/home/pi/Projects/moonshine_3/main.py",
                             ],
-                            env=env
+                           env=env
                             )
-            logger.warning(f"{s} executed")
+            s.wait()
+            logger.warning(f"{{jobs[channel]}} finished with code {s.returncode}")
         except Exception as e:
             logger.error(f"ERROR CALLING PRGRAM: {str(e)}")
 

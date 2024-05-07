@@ -1,4 +1,5 @@
 import os
+import sys
 import RPi.GPIO as GPIO
 
 from config_parser import ProgramBuilder
@@ -6,8 +7,8 @@ from event_loop import EventLoop
 from logger import logger
 
 
-programm = os.environ.get("programm","cycle1")
-logger.warning(f"PROGRAM: {programm}")
+programm = os.environ.get("programm")
+logger.warning(f"STARTING PROGRAM: {programm}")
 
 GPIO.setmode(GPIO.BCM)
 
@@ -21,4 +22,5 @@ el = EventLoop()
 for cmd in program:
     el.add(cmd)
 el.run()
-
+logger.warning(f"PROGRAM FINISHED: {programm}")
+sys.exit(0)
