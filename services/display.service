@@ -3,8 +3,8 @@ Description=Display data fetcher
 BindsTo=moonshine.target
 
 [Service]
-After=alarm.service
-Requires=alarm.service
+After=buttons.service
+Requires=producer.service
 ExecStart=/home/pi/Projects/moonshine_3/.venv/bin/python3 /home/pi/Projects/moonshine_3/service_display.py
 Restart=always
 User=pi

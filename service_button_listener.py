@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import RPi.GPIO as GPIO
 import time
@@ -11,12 +9,12 @@ import subprocess
 
 cycle_1_bt_pin = 9
 cycle_2_bt_pin = 10
-# cycle_3_bt_pin = 11
+cycle_3_bt_pin = 11
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(cycle_1_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(cycle_2_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-# GPIO.setup(cycle_3_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(cycle_3_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 
@@ -39,8 +37,8 @@ def callback(channel):
         env = os.environ.copy()
         env["programm"] = jobs[channel]
         try:
-            s = subprocess.Popen(["/home/pi/Projects/moonshine_3/.venv/bin/python",
-                            "/home/pi/Projects/moonshine_3/main.py",
+            s = subprocess.Popen([".venv/bin/python",
+                            "main.py",
                             ],
                            env=env
                             )
@@ -53,7 +51,7 @@ def callback(channel):
 
 GPIO.add_event_detect(cycle_1_bt_pin, GPIO.BOTH, callback=callback)
 GPIO.add_event_detect(cycle_2_bt_pin, GPIO.BOTH, callback=callback)
-# GPIO.add_event_detect(cycle_3_bt_pin, GPIO.BOTH, callback=callback)
+GPIO.add_event_detect(cycle_3_bt_pin, GPIO.BOTH, callback=callback)
 
 while True:
     time.sleep(1)

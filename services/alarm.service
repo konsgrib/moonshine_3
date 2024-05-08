@@ -3,8 +3,8 @@ Description=Humidity monitoring
 BindsTo=moonshine.target
 
 [Service]
-After=producer.service
 Requires=producer.service
+After=producer.service
 ExecStart=/home/pi/Projects/moonshine_3/.venv/bin/python3 /home/pi/Projects/moonshine_3/service_alarm.py
 Restart=always
 User=pi
