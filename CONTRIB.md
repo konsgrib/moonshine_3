@@ -47,3 +47,9 @@ sudo systemctl daemon-reload
 sudo ln -s /home/pi/Projects/moonshine_3/services/moonshine.target /etc/systemd/system/moonshine.target
 sudo systemctl enable moonshine.target
 sudo systemctl start moonshine.target
+sudo systemctl stop moonshine.target
+
+sudo systemctl disable producer
+sudo systemctl disable buttons
+sudo systemctl disable alarm
+sudo systemctl disable display

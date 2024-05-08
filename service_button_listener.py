@@ -22,7 +22,7 @@ GPIO.setup(cycle_3_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 jobs = {
     cycle_1_bt_pin: "cycle1",
-    cycle_2_bt_pin: "cycle1",
+    cycle_2_bt_pin: "cycle2",
     cycle_3_bt_pin: "cycle3"
 }
 

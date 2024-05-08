@@ -3,8 +3,6 @@ Description=Sensor and relay states monitor
 # BindsTo=moonshine.target
 
 [Service]
-# After=button.service
-# Requires=button.service
 ExecStart=/home/pi/Projects/moonshine_3/.venv/bin/python3 /home/pi/Projects/moonshine_3/service_producer.py
 Restart=always
 User=pi

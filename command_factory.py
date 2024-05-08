@@ -187,6 +187,25 @@ class OutputDeviceCommand(Command):
             raise ValueError(f"Incorrect command: {self.action}")
 
 
+class BlockingCounterAVGCommand(Command):
+    def __init__(self, sensor: AbstractSensor):
+        self.sensor = sensor
+        self.values = []
+        self.average_value = 0.0
+
+    def execute(self, event_loop):
+        for _ in range(10):
+            self.values.append(self.sensor.get_value().value)
+        self.average_value = sum(self.values) / len(self.values)
+
+        while self.sensor.get_value().value < self.average_value + 0.3:
+            print(
+                f"SENSOR VALUE: {self.sensor.get_value().value} AVG: {self.average_value}"
+            )
+            self.values.append(self.sensor.get_value().value)
+            self.average_value = sum(self.values) / len(self.values)
+
+
 
 class DelayCommand(Command):
     def __init__(self, time_seconds: int) -> None:
@@ -222,6 +241,8 @@ class CommandFactory:
             return OutputDeviceCommand(**parameters)
         elif type == "BlockingStateUpdateCommand":
             return BlockingStateUpdateCommand(**parameters)
+        elif type == "BlockingCounterAVGCommand":
+            return BlockingCounterAVGCommand(**parameters)
         elif type == "DelayCommand":
             return DelayCommand(**parameters)
         elif type == "ClearQueue":
