@@ -16,24 +16,19 @@ class Command(ABC):
         pass
 
 
-class RecurringCommand:
+class RecurringCommand(Command):
     def __init__(self, commands, repeat_times=None):
         self.commands = commands
-        self.counter = 0
         self.repeat_times = repeat_times
 
     def execute(self, event_loop):
         if self.repeat_times:
             for command in self.commands:
-                self.command.execute(event_loop)
-                self.counter += 1
-                if self.counter < self.repeat_times:
-                    event_loop.add(self)
+                for _ in range(self.repeat_times):
+                    event_loop.add(command)
         else:
             for command in self.commands:
-                command.execute(event_loop)
                 event_loop.add(self)
-
 
 
 class ProducerCommand(Command):
@@ -77,8 +72,6 @@ class ProducerCommand(Command):
         self.queue_processor.produce_message(message)
 
 
-
-
 class DisplayDataCommand(Command):
     def __init__(
         self,
@@ -89,7 +82,6 @@ class DisplayDataCommand(Command):
     def execute(self, data):
         message = json.loads(data)
         self.display.show_data(message)
-
 
 
 class AlarmCommand(Command):
@@ -106,7 +98,6 @@ class AlarmCommand(Command):
         else:
             raise ValueError(f"Incorrect comparison rule {rule}"
                              f"must be in {list(__class__.__name__.rules.keys())}")
-
 
     def execute(self, data):
         message = json.loads(data)
@@ -182,7 +173,6 @@ class OutputDeviceCommand(Command):
             self.device.set_state(1)
             sleep(self.delay)
             self.device.set_state(0)
-
         else:
             raise ValueError(f"Incorrect command: {self.action}")
 

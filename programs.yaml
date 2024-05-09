@@ -7,7 +7,7 @@ humidity-treshold: &humidity_theshold 80
 cooler-stop-delay: &cooler_delay 30
 power_inc_clicks: &restore_power 50
 power_inc_click_time: &restore_click_time 0.5
-power_dec_pressed_time: &power_dec_pressed_time 0.152
+power_dec_pressed_time: &power_dec_pressed_time 0.151
 pins:
   humidity_1: &sensor_hum_1 14
   humidity_2: &sensor_hum_2 15
@@ -129,6 +129,15 @@ programms:
       type: OutputDeviceCommand
       device: power_relay
       action: "on"
+    - command:
+      type: RecurringCommand
+      commands:
+        - command:
+          type: OutputDeviceCommand
+          device: power_inc_relay
+          action: "onoff"
+          delay: *power_dec_pressed_time
+      repeat_times: 40
     - command: 
       type: BlockingStateUpdateCommand
       sensor: termo_1
@@ -179,6 +188,15 @@ programms:
       type: OutputDeviceCommand
       device: power_relay
       action: "on"
+    - command:
+      type: RecurringCommand
+      commands:
+        - command:
+          type: OutputDeviceCommand
+          device: power_inc_relay
+          action: "onoff"
+          delay: *power_dec_pressed_time
+      repeat_times: 40
     - command: 
       type: BlockingStateUpdateCommand
       sensor: termo_1
@@ -200,10 +218,14 @@ programms:
       device: messenger
       text: "3:2"
     - command:
-      type: OutputDeviceCommand
-      device: power_dec_relay
-      action: "onoff"
-      delay: *power_dec_pressed_time
+      type: RecurringCommand
+      commands:
+        - command:
+          type: OutputDeviceCommand
+          device: power_dec_relay
+          action: "onoff"
+          delay: *power_dec_pressed_time
+      repeat_times: 30
     - command:
       type: PrintCommand
       device: messenger
@@ -282,3 +304,26 @@ programms:
       text: ""
     - command:
       type: ClearQueue
+  test:
+    - command: PowerOn
+      type: OutputDeviceCommand
+      device: power_relay
+      action: "on"
+    - command:
+      type: RecurringCommand
+      commands:
+        - command:
+          type: OutputDeviceCommand
+          device: power_inc_relay
+          action: "onoff"
+          delay: *power_dec_pressed_time
+      repeat_times: 40
+    - command:
+      type: RecurringCommand
+      commands:
+        - command:
+          type: OutputDeviceCommand
+          device: power_dec_relay
+          action: "onoff"
+          delay: *power_dec_pressed_time
+      repeat_times: 30
