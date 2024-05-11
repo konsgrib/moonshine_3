@@ -25,9 +25,11 @@ class RecurringCommand(Command):
         if self.repeat_times:
             for command in self.commands:
                 for _ in range(self.repeat_times):
+                    command.execute(event_loop)
                     event_loop.add(command)
         else:
             for command in self.commands:
+                command.execute(event_loop)
                 event_loop.add(self)
 
 
@@ -68,6 +70,7 @@ class ProducerCommand(Command):
             "message": self.messenger.get_message(),
         }
         message = json.dumps(values)
+        print(values)
         sleep(1)
         self.queue_processor.produce_message(message)
 

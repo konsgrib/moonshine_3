@@ -104,22 +104,6 @@ programms:
       buzzer: buzzer
       treshold: *humidity_theshold
       rule: "ge"
-  cycle:
-    - command:
-      type: PrintCommand
-      device: messenger
-      text: "1:1"
-    - command: PowerOn
-      type: OutputDeviceCommand
-      device: power_relay
-      action: "on"
-    - command: 
-      type: ReactCommand
-      sensor_name: termo_1
-      relay: cooler_relay
-      treshold: *min_t     
-      rule: "ge"
-      action: "on"
   cycle1:
     - command:
       type: PrintCommand
