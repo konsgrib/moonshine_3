@@ -8,6 +8,7 @@ from time import sleep
 from display.abstract_display import AbstractDisplay
 from messenger.abstract_messenger import AbstractMessenger
 from messenger.messenger_rabbit import QueueProcessorRabbit
+from logger import logger
 
 
 class Command(ABC):
@@ -70,7 +71,7 @@ class ProducerCommand(Command):
             "message": self.messenger.get_message(),
         }
         message = json.dumps(values)
-        print(values)
+        logger.warning(values)
         sleep(1)
         self.queue_processor.produce_message(message)
 
@@ -104,10 +105,11 @@ class AlarmCommand(Command):
 
     def execute(self, data):
         message = json.loads(data)
-        print(message)
+        logger.warning(message)
         humidity_level = message["humidity_1"]
         if self.rule(humidity_level, self.treshold):
-            if message["relay_pwr"] == 0:
+            # self.relay_pwr.set_state(0)
+            if message["relay_pwr"] == 1:
                 self.relay_pwr.set_state(0)
             if message["buzzer_1"] != 1:
                 self.buzzer.set_state(1)
@@ -123,7 +125,7 @@ class BlockingStateUpdateCommand(Command):
 
     def execute(self, event_loop):
         while self.sensor.get_value().value < self.treshold:
-            print("SENSOR VALUE: ", self.sensor.get_value().value)
+            logger.warning(f"SENSOR VALUE: {self.sensor.get_value().value}")
             sleep(1)
 
 
@@ -192,7 +194,7 @@ class BlockingCounterAVGCommand(Command):
         self.average_value = sum(self.values) / len(self.values)
 
         while self.sensor.get_value().value < self.average_value + 0.3:
-            print(
+            logger.warning(
                 f"SENSOR VALUE: {self.sensor.get_value().value} AVG: {self.average_value}"
             )
             self.values.append(self.sensor.get_value().value)
@@ -205,19 +207,19 @@ class DelayCommand(Command):
         self.time_seconds = time_seconds
 
     def execute(self, event_loop):
-        print("DelayCommand")
+        logger.warning("DelayCommand")
         sleep(self.time_seconds)
 
 
 class ClearQueue(Command):
     def execute(self, event_loop):
-        print("ClearQueue")
+        logger.warning("ClearQueue")
         event_loop.clear()  
 
 
 class CommandFactory:
     def create_command(self, type, parameters):
-        print(f"TYPE:{type},  PARAMS: {parameters}")
+        logger.warning(f"TYPE:{type},  PARAMS: {parameters}")
         if type == "AlarmCommand":
             return AlarmCommand(**parameters)
         elif type == "DisplayDataCommand":

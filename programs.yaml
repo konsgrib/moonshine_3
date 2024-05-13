@@ -289,6 +289,10 @@ programms:
     - command:
       type: ClearQueue
   test:
+    - command: RestartCycle2
+      type: PrintCommand
+      device: messenger
+      text: "1:2"
     - command: PowerOn
       type: OutputDeviceCommand
       device: power_relay
@@ -302,6 +306,26 @@ programms:
           action: "onoff"
           delay: *power_dec_pressed_time
       repeat_times: 40
+    - command: 
+      type: BlockingStateUpdateCommand
+      sensor: termo_1
+      treshold: *min_t
+    - command:
+      type: PrintCommand
+      device: messenger
+      text: "2:2"
+    - command: 
+      type: OutputDeviceCommand
+      device: cooler_relay
+      action: "on"
+    - command: 
+      type: BlockingStateUpdateCommand
+      sensor: termo_2
+      treshold: *max_t
+    - command:
+      type: PrintCommand
+      device: messenger
+      text: "3:2"
     - command:
       type: RecurringCommand
       commands:
@@ -311,3 +335,74 @@ programms:
           action: "onoff"
           delay: *power_dec_pressed_time
       repeat_times: 30
+    - command: 
+      type: PrintCommand
+      device: messenger
+      text: "5:2"
+    - command: 
+      type: OutputDeviceCommand
+      device: valve_1_relay
+      action: "on"
+    - command:
+      type: PrintCommand
+      device: messenger
+      text: "6:2"
+    - command: 
+      type: BlockingStateUpdateCommand
+      sensor: water_level_1
+      treshold: 1
+    - command:
+      type: PrintCommand
+      device: messenger
+      text: "7:2"
+    - command: 
+      type: OutputDeviceCommand
+      device: valve_1_relay
+      action: "off"
+    - command: 
+      type: OutputDeviceCommand
+      device: valve_2_relay
+      action: "on"
+    - command:
+      type: PrintCommand
+      device: messenger
+      text: "8:2"
+    - command: delay
+      type: DelayCommand
+      time_seconds: *work-time
+    - command:
+      type: PrintCommand
+      device: messenger
+      text: "9:2"
+    - command:
+      type: BlockingCounterAVGCommand
+      sensor: termo_2
+    - command:
+      type: PrintCommand
+      device: messenger
+      text: "10:2"
+    - command: 
+      type: OutputDeviceCommand
+      device: power_relay
+      action: "off"
+    - command:
+      type: PrintCommand
+      device: messenger
+      text: "11:2"
+    - command: delay
+      type: DelayCommand
+      time_seconds: *cooler_delay
+    - command: PowerOff
+      type: OutputDeviceCommand
+      device: cooler_relay
+      action: "off"
+    - command: 
+      type: OutputDeviceCommand
+      device: valve_2_relay
+      action: "off"
+    - command:
+      type: PrintCommand
+      device: messenger
+      text: ""
+    - command:
+      type: ClearQueue
