@@ -1,6 +1,6 @@
 [Unit]
 Description=Sensor and relay states monitor
-# BindsTo=moonshine.target
+BindsTo=moonshine.target
 
 [Service]
 ExecStart=/home/pi/Projects/moonshine_3/.venv/bin/python3 /home/pi/Projects/moonshine_3/service_producer.py

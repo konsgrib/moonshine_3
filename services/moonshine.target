@@ -1,6 +1,6 @@
 [Unit]
-Description=Moonshine Target
-Requires=buttons.service alarm.service display.service producer.service
+Description=Services that are related to the moonshine process
+Requires=producer.service alarm.service buttons.service display.service
 
 [Install]
 WantedBy=multi-user.target
