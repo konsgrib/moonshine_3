@@ -21,6 +21,6 @@ ENV PYTHONPATH /app:$PYTHONPATH
 
 COPY . .
 
-RUN ls -lA
+RUN whereis python
 
 CMD ["pytest", "-vvs", "tests.py"]
