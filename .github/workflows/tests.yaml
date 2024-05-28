@@ -16,3 +16,4 @@ jobs:
       - name: Set up Docker for Raspberry Pi emulation and run tests
         run: |
           docker run --rm -v $PWD:/workdir -w /workdir lukechilds/dockerpi:latest bash -c "apt-get update && apt-get install -y python3-pip && pip3 install -r ./tests/requirements.txt && pytest -vvs tests.py"
+          
