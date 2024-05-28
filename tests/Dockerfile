@@ -5,6 +5,8 @@ WORKDIR /app
 
 COPY ./tests/requirements.txt ./
 
+COPY ./tests/RPi.GPIO.py ./
+
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 RUN python -c "import site; print(site.getsitepackages()[0])" > site_packages.txt
