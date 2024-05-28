@@ -12,5 +12,5 @@ COPY ./tests/RPi.GPIO.py ./sensor/RPi.GRIO.py
 COPY . .
 
 RUN ls -l
-
+RUN ls -l ./sensor
 CMD ["pytest", "-vvs", "tests.py"]
