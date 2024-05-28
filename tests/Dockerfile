@@ -9,6 +9,8 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY ./tests/RPi.GPIO.py ./sensor/RPi.GPIO.py
 
+ENV PYTHONPATH /app:$PYTHONPATH
+
 COPY . .
 
 RUN ls -l
