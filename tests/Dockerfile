@@ -7,7 +7,7 @@ COPY ./tests/requirements.txt ./
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY ./tests/RPi.GPIO.py ./RPi.GRIO.py
+COPY ./tests/RPi.GPIO.py ./sensor/RPi.GRIO.py
 
 COPY . .
 
