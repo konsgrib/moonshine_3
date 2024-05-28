@@ -1,25 +1,33 @@
 name: tests
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:   [main]
+    pull_request:
+        branches:   [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Set up Docker and run tests
-        run: |
-          docker run --rm -v $PWD:/workdir -w /workdir lukechilds/dockerpi:latest /bin/bash -c " \
-            apt-get update && \
-            apt-get install -y python3-pip && \
-            pip3 install --upgrade pip && \
-            pip3 install -r ./tests/requirements.txt && \
-            python3 -m pytest -vvs tests.py
-          "
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   name:   Checkout code
+                uses:   actions/checkout@v2
+
+            -   name:   Set up python
+                uses:   actions/setup-python@v2
+                with:
+                    python-version: 3.11
+
+            -   name: Set up Docker for Raspberry Pi emulation
+                run: |
+                    docker run --rm -v $PWD:/workdir -w /workdir lukechilds/dockerpi:latest /bin/bash -c "\
+                      apt-get update && \
+                      apt-get install -y python3-pip && \
+                      python3 -m pip install --upgrade pip && \
+                      pip3 install -r ./tests/requirements.txt && \
+                      python3 -m pytest -vvs tests.py "
+            -   name: Run black
+                run:    black .
+
+            -   name: Run tests
+                run:    pytest -vs ./tests.py
