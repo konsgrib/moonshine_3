@@ -13,22 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2 
 
-      - name: Set up python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
-
-      - name: Install dependencies
+      - name: Set up Docker for Raspberry Pi emulation and run tests
         run: |
-          python -m pip install --upgrade pip
-          pip install -r ./tests/requirements.txt
-
-      - name: Run black
-        run: black .
-      
-      - name: Set up Docker for Raspberry Pi emulation
-        run: |
-          docker run --rm -v $PWD:/workdir -w /workdir lukechilds/dockerpi:latest pytest -vvs tests.py
-
-      - name: Run tests
-        run: pytest -vs ./tests.py
+          docker run --rm -v $PWD:/workdir -w /workdir lukechilds/dockerpi:latest bash -c "apt-get update && apt-get install -y python3-pip && pip3 install -r ./tests/requirements.txt && pytest -vvs tests.py"
