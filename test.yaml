@@ -1,0 +1,11 @@
+programms:
+  producer: 
+    - command: recurring
+      type: RecurringCommand
+      commands:
+        - command: producer
+          type: ProducerCommand
+          termo_1: termo_1
+          termo_2: termo_2
+          humidity_1: humidity
+      repeat_times: Null

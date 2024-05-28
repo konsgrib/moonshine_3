@@ -7,7 +7,9 @@ from time import sleep
 class HumidityLevelSensor(AbstractSensor):
     def __init__(self, pin):
         self.pin = pin
-        self.sensor = adafruit_dht.DHT22(getattr(board, f"D{self.pin}"), use_pulseio=False)
+        self.sensor = adafruit_dht.DHT22(
+            getattr(board, f"D{self.pin}"), use_pulseio=False
+        )
 
     def get_value(self) -> SensorValue:
 
@@ -18,8 +20,3 @@ class HumidityLevelSensor(AbstractSensor):
             return SensorValue(500, -1, "NOK")
         finally:
             sleep(1)
-
-        # if humidity > 100:
-        #     humidity = 0
-        # if humidity is not None:
-        # return SensorValue(500, -1, "NOK")

@@ -4,7 +4,6 @@ import RPi.GPIO as GPIO
 from logger import logger
 
 
-
 class EventLoop:
     def __init__(self):
         self.ready = deque()
@@ -32,4 +31,3 @@ class EventLoop:
                 ExceptionHandler(cmd, e).handle()
             except KeyboardInterrupt:
                 break
-    

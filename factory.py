@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from sensor.temperature import TempertureSensor
+from sensor.temperature import TemperatureSensor
 from sensor.water import WaterLevelSensor
 from sensor.humidity import HumidityLevelSensor
 from sensor.button import Button
@@ -19,7 +19,7 @@ class AbstractFactory(ABC):
 
 class Factory(AbstractFactory):
     device_types = {
-        "TempertureSensor": TempertureSensor,
+        "TemperatureSensor": TemperatureSensor,
         "WaterLevelSensor": WaterLevelSensor,
         "HumidityLevelSensor": HumidityLevelSensor,
         "Relay": Relay,
@@ -31,5 +31,8 @@ class Factory(AbstractFactory):
 
     def create_device(self, sensor_type, **kwargs):
         if sensor_type in Factory.device_types:
-            return Factory.device_types[sensor_type](**kwargs)
-        raise ValueError(f"Invalid sensor type: {sensor_type}")
+            try:
+                return Factory.device_types[sensor_type](**kwargs)
+            except Exception as e:
+                print(str(e))
+                raise

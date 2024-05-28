@@ -45,8 +45,8 @@ class ProducerCommand(Command):
         relay_clr: AbstractTwoPin,
         relay_v1: AbstractTwoPin,
         relay_v2: AbstractTwoPin,
-        messenger: AbstractMessenger
-        ):
+        messenger: AbstractMessenger,
+    ):
         self.termo_1 = termo_1
         self.termo_2 = termo_2
         self.humidity_1 = humidity_1
@@ -63,7 +63,7 @@ class ProducerCommand(Command):
             "termo_1": self.termo_1.get_value().value,
             "termo_2": self.termo_2.get_value().value,
             "humidity_1": self.humidity_1.get_value().value,
-            "buzzer_1" : self.buzzer_1.get_value().value,
+            "buzzer_1": self.buzzer_1.get_value().value,
             "relay_pwr": self.relay_pwr.get_value().value,
             "relay_clr": self.relay_clr.get_value().value,
             "relay_v1": self.relay_v1.get_value().value,
@@ -77,10 +77,7 @@ class ProducerCommand(Command):
 
 
 class DisplayDataCommand(Command):
-    def __init__(
-        self,
-        display: AbstractDisplay
-    ):
+    def __init__(self, display: AbstractDisplay):
         self.display = display
 
     def execute(self, data):
@@ -89,19 +86,25 @@ class DisplayDataCommand(Command):
 
 
 class AlarmCommand(Command):
-    rules = {
-        "lt": operator.lt,
-        "ge": operator.ge
-    }
-    def __init__(self, relay_pwr: AbstractTwoPin, buzzer: AbstractTwoPin, treshold: float, rule: str):
+    rules = {"lt": operator.lt, "ge": operator.ge}
+
+    def __init__(
+        self,
+        relay_pwr: AbstractTwoPin,
+        buzzer: AbstractTwoPin,
+        treshold: float,
+        rule: str,
+    ):
         self.relay_pwr = relay_pwr
         self.buzzer = buzzer
         self.treshold = treshold
         if rule in self.rules:
             self.rule = self.rules[rule]
         else:
-            raise ValueError(f"Incorrect comparison rule {rule}"
-                             f"must be in {list(__class__.__name__.rules.keys())}")
+            raise ValueError(
+                f"Incorrect comparison rule {rule}"
+                f"must be in {list(__class__.__name__.rules.keys())}"
+            )
 
     def execute(self, data):
         message = json.loads(data)
@@ -139,7 +142,14 @@ class PrintCommand(Command):
 
 
 class ReactCommand(Command):
-    def __init__(self, sensor_name:str, relay: AbstractTwoPin,  treshold: float, rule: str, action: str):
+    def __init__(
+        self,
+        sensor_name: str,
+        relay: AbstractTwoPin,
+        treshold: float,
+        rule: str,
+        action: str,
+    ):
         self.sensor_name = sensor_name
         self.relay = relay
         self.treshold = treshold
@@ -148,15 +158,17 @@ class ReactCommand(Command):
         if rule in AlarmCommand.rules:
             self.rule = AlarmCommand.rules[rule]
         else:
-            raise ValueError(f"Incorrect comparison rule {rule}"
-                             f"must be in {list(__class__.__name__.rules.keys())}")
-        
+            raise ValueError(
+                f"Incorrect comparison rule {rule}"
+                f"must be in {list(__class__.__name__.rules.keys())}"
+            )
+
     def execute(self, data=None):
         data = self.queue_processor.get_message()
         message = json.loads(data)
         while not self.rule(message[self.sensor_name], self.treshold):
             data = self.queue_processor.get_message()
-            message = json.loads(data)        
+            message = json.loads(data)
         if self.action == "on":
             self.relay.set_state(1)
         elif self.action == "off":
@@ -201,7 +213,6 @@ class BlockingCounterAVGCommand(Command):
             self.average_value = sum(self.values) / len(self.values)
 
 
-
 class DelayCommand(Command):
     def __init__(self, time_seconds: int) -> None:
         self.time_seconds = time_seconds
@@ -214,7 +225,7 @@ class DelayCommand(Command):
 class ClearQueue(Command):
     def execute(self, event_loop):
         logger.warning("ClearQueue")
-        event_loop.clear()  
+        event_loop.clear()
 
 
 class CommandFactory:

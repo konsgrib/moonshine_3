@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 from .abstract_sensor import AbstractSensor, SensorValue
 
+
 class Button(AbstractSensor):
     def __init__(self, pin) -> None:
         self.pin = pin

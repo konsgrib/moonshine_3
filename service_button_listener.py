@@ -12,13 +12,10 @@ GPIO.setup(cycle_1_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(cycle_2_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(cycle_3_bt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-jobs = {
-    cycle_1_bt_pin: "cycle1",
-    cycle_2_bt_pin: "cycle2",
-    cycle_3_bt_pin: "cycle3"
-}
+jobs = {cycle_1_bt_pin: "cycle1", cycle_2_bt_pin: "cycle2", cycle_3_bt_pin: "cycle3"}
 
 press_start_time = {9: None, 10: None, 11: None}
+
 
 def start_job(pin, special=False):
     """Starts a job by running a Python script."""
@@ -30,6 +27,7 @@ def start_job(pin, special=False):
         env = os.environ.copy()
         env["programm"] = jobs[pin]
         subprocess.Popen([".venv/bin/python", "main.py"], env=env)
+
 
 def wait_for_it():
     last_state = {9: True, 10: True, 11: True}

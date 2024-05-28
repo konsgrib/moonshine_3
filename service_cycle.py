@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 
 from config_parser import ProgramBuilder
 from event_loop import EventLoop
+
 GPIO.setmode(GPIO.BCM)
 
 config_yaml = "programs.yaml"

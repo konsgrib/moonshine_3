@@ -4,12 +4,12 @@ import time
 from .abstract_sensor import AbstractSensor, SensorValue
 
 
-class TempertureSensor(AbstractSensor):
+class TemperatureSensor(AbstractSensor):
     def __init__(self, device_id):
         self.device_id = device_id
         self.base_dir = "/sys/bus/w1/devices/"
-        os.system("modprobe w1-gpio")
-        os.system("modprobe w1-therm")
+        # os.system("modprobe w1-gpio")
+        # os.system("modprobe w1-therm")
 
     def _get_device_file(self):
         device_folder = glob.glob(self.base_dir + self.device_id)[0]

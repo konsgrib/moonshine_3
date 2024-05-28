@@ -32,8 +32,8 @@ pins:
     cycle_3_pin: &cycle_3_pin 11
 one-wire:
   temperature:
-    sensor_1: &t1_id 28-42f7d445552f
-    sensor_2: &t2_id 28-5be6d445359c
+    sensor_1: &t1_id 28-0214811929ff
+    sensor_2: &t2_id 28-0417301b9dff
 devices:
     - type: Relay
       name: power_relay 
@@ -56,10 +56,10 @@ devices:
     - type: Buzzer
       name: buzzer
       pin: *buzzer_pin
-    - type: TempertureSensor
+    - type: TemperatureSensor
       name: termo_1
       device_id: *t1_id
-    - type: TempertureSensor
+    - type: TemperatureSensor
       name: termo_2
       device_id: *t2_id
     - type: HumidityLevelSensor

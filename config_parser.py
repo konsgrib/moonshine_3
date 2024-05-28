@@ -59,8 +59,6 @@ class ProgramBuilder:
         }
         return parameters
 
-
-
     def get_program(self, program_name: str):
         config_data = self.config_reader.get_config_data(self.config_file)
         program_data = config_data["programms"][program_name]
@@ -75,6 +73,8 @@ class ProgramBuilder:
         command_type = command["type"]
         parameters = self.build_parameters(command)
         if "commands" in command:
-            subcommands = [self.create_command_with_subcommands(cmd) for cmd in command["commands"]]
+            subcommands = [
+                self.create_command_with_subcommands(cmd) for cmd in command["commands"]
+            ]
             parameters["commands"] = subcommands
         return self.command_factory.create_command(command_type, parameters)
