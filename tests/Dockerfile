@@ -8,12 +8,17 @@ COPY ./tests/requirements.txt ./
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 RUN python -c "import site; print(site.getsitepackages()[0])" > site_packages.txt
+
+RUN pwd
+
+RUN ls -lA
+
 RUN cat site_packages.txt | xargs -I {} cp ./RPi.GPIO.py {}/RPi.GPIO.py
 
 ENV PYTHONPATH /app:$PYTHONPATH
 
 COPY . .
 
-RUN ls -lAR
+RUN ls -lA
 
 CMD ["pytest", "-vvs", "tests.py"]
