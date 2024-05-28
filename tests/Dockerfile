@@ -7,8 +7,8 @@ COPY ./tests/requirements.txt ./
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY ./tests/RPi.GPIO.py ./RPi.GPIO.py
-COPY ./tests/RPi.GPIO.py ./sensor/RPi.GPIO.py
+RUN python -c "import site; print(site.getsitepackages()[0])" > site_packages.txt
+RUN cat site_packages.txt | xargs -I {} cp ./tests/RPi.GPIO.py {}/RPi.GPIO.py
 
 ENV PYTHONPATH /app:$PYTHONPATH
 
