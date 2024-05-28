@@ -15,5 +15,5 @@ jobs:
 
       - name: Build and run Docker image
         run: |
-          docker build -t my-python-app .
+          docker build -t my-python-app ./tests
           docker run --rm my-python-app
