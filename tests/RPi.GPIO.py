@@ -23,6 +23,7 @@ class GPIO:
     @staticmethod
     def input(channel):
         return 0
+        
 
     @staticmethod
     def cleanup():
