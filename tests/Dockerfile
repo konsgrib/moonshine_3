@@ -7,7 +7,7 @@ COPY ./requirements.txt ./
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
-RUN ls-l
+RUN ls -l
 
 
 CMD ["pytest", "-vvs", "tests.py"]
