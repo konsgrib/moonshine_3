@@ -13,6 +13,6 @@ ENV PYTHONPATH /app:$PYTHONPATH
 
 COPY . .
 
-RUN ls -l
-RUN ls -l ./sensor
+RUN ls -lAR
+
 CMD ["pytest", "-vvs", "tests.py"]
