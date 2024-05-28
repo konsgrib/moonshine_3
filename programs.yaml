@@ -1,6 +1,6 @@
 min-temperature: &min_t 25.2
 max-temperature: &max_t 28.5
-power-on-low-temperature: 30
+power-off-cycle_one: &poco 30
 warming-time-seconds: &warming-time 60
 work-time-seconds: &work-time 60
 humidity-treshold: &humidity_theshold 80
@@ -137,7 +137,7 @@ programms:
     - command: 
       type: BlockingStateUpdateCommand
       sensor: termo_1
-      treshold: *max_t
+      treshold: *poco
     - command:
       type: PrintCommand
       device: messenger
