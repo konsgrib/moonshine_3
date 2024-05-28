@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2 
 
-      - name: Set up Docker for Raspberry Pi emulation and run tests
+      - name: Build and run Docker image
         run: |
-          docker run --rm -v $PWD:/workdir -w /workdir lukechilds/dockerpi:latest bash -c "apt-get update && apt-get install -y python3-pip && pip3 install -r ./tests/requirements.txt && pytest -vvs tests.py"
-          
+          docker build -t my-python-app .
+          docker run --rm my-python-app
