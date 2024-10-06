@@ -3,7 +3,7 @@ Description=Listenning pressed buttons
 BindsTo=moonshine.target
 
 [Service]
-# After=producer.service
+After=producer.service
 ExecStart=/home/pi/Projects/moonshine_3/.venv/bin/python3 /home/pi/Projects/moonshine_3/service_button_listener.py
 Restart=always
 User=pi
