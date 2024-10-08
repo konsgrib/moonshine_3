@@ -1,6 +1,6 @@
 [Unit]
 Description=Services that are related to the moonshine process
-After=producer.service alarm.service buttons.service display.service
+Before=producer.service alarm.service buttons.service display.service
 
 [Install]
 WantedBy=multi-user.target
